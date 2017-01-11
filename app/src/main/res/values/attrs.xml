@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BounceBounce">
+        <attr name="radius" format="dimension" />
+        <attr name="xSpeed" format="dimension" />
+        <attr name="ySpeed" format="dimension" />
+        <attr name="cirColor" format="string" />
+    </declare-styleable>
+</resources>
