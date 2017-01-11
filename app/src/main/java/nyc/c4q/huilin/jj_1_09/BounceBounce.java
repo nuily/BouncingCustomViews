@@ -32,7 +32,7 @@ public class BounceBounce extends View {
                 R.styleable.BounceBounce,
                 0, 0);
         try {
-            radius = a.getDimension(R.styleable.BounceBounce_radius, pxToDp(10));
+            radius = a.getDimension(R.styleable.BounceBounce_radius, pxToDp(100));
             xSpeed = a.getDimension(R.styleable.BounceBounce_xSpeed, pxToDp(5));
             ySpeed = a.getDimension(R.styleable.BounceBounce_ySpeed, pxToDp(0));
             cirColor = a.getString(R.styleable.BounceBounce_cirColor);
@@ -44,7 +44,7 @@ public class BounceBounce extends View {
             a.recycle();
         }
         xPos = this.getRight() + radius;
-//        yPos = this.getTop() - radius;
+        yPos = this.getTop() + radius;
         init();
     }
 
@@ -68,7 +68,7 @@ public class BounceBounce extends View {
         }
 
         xPos += xSpeed * xDir;
-//        yPos += ySpeed * yDir;
+        yPos += xSpeed * xDir;
         invalidate();
     }
 }
