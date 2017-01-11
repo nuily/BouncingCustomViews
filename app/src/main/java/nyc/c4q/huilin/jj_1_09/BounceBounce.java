@@ -29,9 +29,9 @@ public class BounceBounce extends View {
                 0, 0);
 
         try {
-            radius = a.getDimension(R.styleable.BounceBounce_radius, 10);
-            xSpeed = a.getDimension(R.styleable.BounceBounce_xSpeed, 5);
-            ySpeed = a.getDimension(R.styleable.BounceBounce_ySpeed, 10);
+            radius = a.getDimension(R.styleable.BounceBounce_radius, 50);
+            xSpeed = a.getDimension(R.styleable.BounceBounce_xSpeed, 200);
+            ySpeed = a.getDimension(R.styleable.BounceBounce_ySpeed, 100);
             cirColor = a.getString(R.styleable.BounceBounce_cirColor);
             if (cirColor == null)  {
                 cirColor = "#FFF11223";
@@ -56,7 +56,7 @@ public class BounceBounce extends View {
         if (xSpeed > this.getRight() - radius || xSpeed < this.getLeft() + radius) {
             xDir *= -1;
         }
-        xSpeed *= xDir;
+        xSpeed += xSpeed * xDir;
         invalidate();
     }
 }
