@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 /**
@@ -16,6 +17,8 @@ public class BounceBounce extends View {
     private float radius;
     private float xSpeed;
     private float ySpeed;
+    private float yPos = 0;
+    private float xPos = 0;
     private float xDir = 1;
     private float yDir = 1;
     private String cirColor;
@@ -27,20 +30,26 @@ public class BounceBounce extends View {
                 attrs,
                 R.styleable.BounceBounce,
                 0, 0);
-
         try {
-            radius = a.getDimension(R.styleable.BounceBounce_radius, 50);
-            xSpeed = a.getDimension(R.styleable.BounceBounce_xSpeed, 200);
-            ySpeed = a.getDimension(R.styleable.BounceBounce_ySpeed, 100);
+            radius = a.getDimension(R.styleable.BounceBounce_radius, pxToDp(50));
+            xSpeed = a.getDimension(R.styleable.BounceBounce_xSpeed, pxToDp(5));
+            ySpeed = a.getDimension(R.styleable.BounceBounce_ySpeed, pxToDp(0));
             cirColor = a.getString(R.styleable.BounceBounce_cirColor);
-            if (cirColor == null)  {
+            if (cirColor == null) {
                 cirColor = "#FFF11223";
             }
+
         } finally {
             a.recycle();
         }
-
+        xPos = getRight() + radius;
+        yPos = getTop() + radius;
         init();
+    }
+
+    public int pxToDp(int px) {
+        DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+        return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
     private void init() {
@@ -52,11 +61,13 @@ public class BounceBounce extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawCircle(xSpeed, ySpeed, radius, dotPaint);
-        if (xSpeed > this.getRight() - radius || xSpeed < this.getLeft() + radius) {
+        canvas.drawCircle(xPos, yPos, radius, dotPaint);
+        if (xPos > getRight() - radius || xPos < getLeft() + radius) {
             xDir *= -1;
         }
-        xSpeed += xSpeed * xDir;
+
+        xPos += xSpeed * xDir;
+        yPos += ySpeed * yDir;
         invalidate();
     }
 }
